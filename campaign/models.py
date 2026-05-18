@@ -365,6 +365,23 @@ class ComparisonPoint(models.Model):
         return self.theme
 
 
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=200, verbose_name="Nom complet")
+    email = models.EmailField(verbose_name="Adresse e-mail")
+    phone = models.CharField(max_length=30, blank=True, verbose_name="Téléphone")
+    message = models.TextField(verbose_name="Message")
+    received_at = models.DateTimeField(auto_now_add=True, verbose_name="Reçu le")
+    is_read = models.BooleanField(default=False, verbose_name="Lu ?")
+
+    class Meta:
+        ordering = ['-received_at']
+        verbose_name = "Message de contact"
+        verbose_name_plural = "Messages reçus"
+
+    def __str__(self):
+        return f"{self.name} <{self.email}> — {self.received_at:%d/%m/%Y %H:%M}"
+
+
 class NewsArticle(models.Model):
     title = models.CharField(max_length=300, verbose_name="Titre")
     slug = models.SlugField(max_length=320, unique=True, blank=True)

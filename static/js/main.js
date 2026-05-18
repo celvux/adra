@@ -305,6 +305,40 @@ if (!prefersReducedMotion) {
   });
 })();
 
+// ─── FORMULAIRE DE CONTACT — soumission AJAX ─────────────────────────────────
+(function () {
+  const form     = document.getElementById('contactForm');
+  const feedback = document.getElementById('contact-feedback');
+  const btn      = document.getElementById('contactSubmit');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Envoi…';
+    feedback.hidden = true;
+
+    try {
+      const res  = await fetch(form.action, { method: 'POST', body: new FormData(form) });
+      const data = await res.json();
+      if (data.ok) {
+        feedback.className = 'contact-feedback contact-feedback--ok';
+        feedback.textContent = 'Message envoyé ! Nous vous répondrons dans les meilleurs délais.';
+        form.reset();
+        btn.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> Envoyé';
+      } else {
+        throw new Error(data.error || 'Erreur');
+      }
+    } catch (err) {
+      feedback.className = 'contact-feedback contact-feedback--err';
+      feedback.textContent = err.message || 'Une erreur est survenue. Veuillez réessayer.';
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-paper-plane" aria-hidden="true"></i> Envoyer le message';
+    }
+    feedback.hidden = false;
+  });
+})();
+
 // ─── TABLEAU COMPARATIF DOUMBOUYA — reveal ligne par ligne ────────────────────
 (function () {
   const rows = document.querySelectorAll('.comparison-row');

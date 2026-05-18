@@ -9,6 +9,7 @@ from django.views.decorators.http import require_POST
 from .models import (
     SiteSettings, HeroSlide, KeyStat, BioDimension, TimelineStep,
     ProgramAxis, Commitment, Publication, ComparativeAnalysis, NewsArticle,
+    ContactMessage,
 )
 
 
@@ -69,6 +70,20 @@ def index(request):
         'news_articles': NewsArticle.objects.filter(is_published=True),
     }
     return render(request, 'campaign/index.html', context)
+
+
+@require_POST
+def contact(request):
+    name = request.POST.get('name', '').strip()
+    email = request.POST.get('email', '').strip()
+    phone = request.POST.get('phone', '').strip()
+    message = request.POST.get('message', '').strip()
+
+    if not name or not email or not message:
+        return JsonResponse({'ok': False, 'error': 'Veuillez remplir tous les champs obligatoires.'}, status=400)
+
+    ContactMessage.objects.create(name=name, email=email, phone=phone, message=message)
+    return JsonResponse({'ok': True})
 
 
 def publications_json(request):

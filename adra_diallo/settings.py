@@ -11,7 +11,7 @@ def _bool(val):
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = _bool(config('DEBUG', default='False'))
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
-ALLOWED_HOSTS += ['.vercel.app', 'adradiallo.frondeg.co']
+ALLOWED_HOSTS += ['.vercel.app', '.frondeg.co']
 
 INSTALLED_APPS = [
     'jazzmin',
@@ -156,6 +156,7 @@ JAZZMIN_SETTINGS = {
         "campaign.ComparativeAnalysis",
         "campaign.ComparisonPoint",
         "campaign.NewsArticle",
+        "campaign.ContactMessage",
         "auth",
     ],
     "icons": {
@@ -173,6 +174,7 @@ JAZZMIN_SETTINGS = {
         "campaign.ComparativeAnalysis": "fas fa-balance-scale",
         "campaign.ComparisonPoint":     "fas fa-columns",
         "campaign.NewsArticle":         "fas fa-newspaper",
+        "campaign.ContactMessage":      "fas fa-envelope-open-text",
     },
     "default_icon_parents": "fas fa-folder",
     "default_icon_children": "fas fa-circle",

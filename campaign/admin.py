@@ -9,7 +9,7 @@ from .forms import (
 from .models import (
     SiteSettings, HeroSlide, KeyStat, BioDimension, TimelineStep,
     ProgramAxis, Commitment, Publication, ComparativeAnalysis,
-    ComparisonPoint, NewsArticle,
+    ComparisonPoint, NewsArticle, ContactMessage,
 )
 
 
@@ -240,6 +240,21 @@ class NewsArticleAdmin(admin.ModelAdmin):
             if key:
                 obj.cover_image = key
         super().save_model(request, obj, form, change)
+
+
+# ─── ContactMessage ───────────────────────────────────────────────────────────
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'phone', 'received_at', 'is_read')
+    list_filter = ('is_read', 'received_at')
+    search_fields = ('name', 'email', 'message')
+    list_editable = ('is_read',)
+    ordering = ('-received_at',)
+    readonly_fields = ('name', 'email', 'phone', 'message', 'received_at')
+
+    def has_add_permission(self, request):
+        return False
 
 
 # ─── Libellés français ────────────────────────────────────────────────────────
