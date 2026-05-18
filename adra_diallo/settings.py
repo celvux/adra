@@ -13,6 +13,8 @@ DEBUG = _bool(config('DEBUG', default='False'))
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
 ALLOWED_HOSTS += ['.vercel.app', '.frondeg.co']
 
+CSRF_TRUSTED_ORIGINS = ['https://*.frondeg.co', 'https://*.vercel.app']
+
 INSTALLED_APPS = [
     'jazzmin',
     'django.contrib.admin',
