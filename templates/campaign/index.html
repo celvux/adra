@@ -1,0 +1,595 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adra Diallo — FRONDEG Liste Nationale 2026</title>
+<meta name="description" content="{{ site_settings.meta_description }}">
+<link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+<link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32.png' %}">
+<link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon-16.png' %}">
+<link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/apple-touch-icon.png' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Work+Sans:ital,wght@0,300;0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+<div id="read-progress"></div>
+
+<!-- ─── NAVIGATION ───────────────────────────────────────────── -->
+<nav>
+  <a href="#accueil" class="nav-brand">
+    <div class="nav-logo-badge">
+      <i class="fas fa-circle" aria-hidden="true" style="font-size:5px;"></i>
+      FRONDEG
+    </div>
+    <div class="nav-brand-text">
+      Adra Diallo
+      <span>Candidat · Liste Nationale</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#portrait">Portrait</a></li>
+    <li><a href="#parcours">Parcours</a></li>
+    <li><a href="#programme">Programme</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#analyse">Analyse</a></li>
+    <li><a href="#contact" class="nav-cta">Rejoindre</a></li>
+  </ul>
+  <button class="hamburger" id="hamburgerBtn" aria-label="Ouvrir le menu" aria-expanded="false">
+    <i class="fas fa-bars" id="hamburgerIcon"></i>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#portrait" onclick="closeMobileMenu()">Portrait</a>
+  <a href="#parcours" onclick="closeMobileMenu()">Parcours</a>
+  <a href="#programme" onclick="closeMobileMenu()">Programme</a>
+  <a href="#publications" onclick="closeMobileMenu()">Publications</a>
+  <a href="#analyse" onclick="closeMobileMenu()">Analyse</a>
+  <a href="#actualites" onclick="closeMobileMenu()">Actualités</a>
+  <a href="#contact" onclick="closeMobileMenu()">Rejoindre</a>
+</div>
+
+<!-- ─── HERO ──────────────────────────────────────────────────── -->
+<section class="hero" id="accueil" style="padding:0;">
+  <div class="hero-left">
+    <div class="hero-tag ha-fade-up" style="animation-delay:0ms">
+      <i class="fas fa-circle" aria-hidden="true"></i>
+      {{ site_settings.hero_tag }}
+    </div>
+    <h1 class="hero-title ha-fade-left" style="animation-delay:120ms">
+      {{ site_settings.hero_title_line1 }}<br>
+      {{ site_settings.hero_title_line2 }}<br>
+      <span class="accent">{{ site_settings.hero_title_accent }}</span>
+    </h1>
+    <p class="hero-subtitle-name ha-fade-left" style="animation-delay:240ms">{{ site_settings.hero_candidate_name }}</p>
+    <p class="hero-role ha-fade-left" style="animation-delay:300ms">{{ site_settings.hero_role }}</p>
+    <p class="hero-desc ha-fade-up" style="animation-delay:380ms">{{ site_settings.hero_description_html }}</p>
+    <div class="hero-actions ha-fade-up" style="animation-delay:480ms">
+      <a href="#programme" class="btn-primary">
+        <i class="fas fa-list-check" aria-hidden="true"></i>
+        {{ site_settings.hero_btn_primary }}
+      </a>
+      <a href="#parcours" class="btn-outline">
+        <i class="fas fa-user-circle" aria-hidden="true"></i>
+        {{ site_settings.hero_btn_secondary }}
+      </a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-photo-frame"></div>
+    {% if hero_slides %}
+    <div class="hero-slideshow" id="heroSlideshow">
+      {% for slide in hero_slides %}
+      <img src="{{ slide.image.url }}"
+           alt="Abdourahamane Adra Diallo, candidat FRONDEG liste nationale"
+           class="hero-candidate-photo hero-slide{% if forloop.first %} active{% endif %}"
+           {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
+           decoding="async">
+      {% endfor %}
+    </div>
+    {% elif site_settings.candidate_photo %}
+    <img src="{{ site_settings.candidate_photo.url }}"
+         alt="Abdourahamane Adra Diallo, candidat FRONDEG liste nationale"
+         class="hero-candidate-photo ha-photo-reveal"
+         loading="eager" fetchpriority="high" decoding="async">
+    {% else %}
+    <div class="hero-photo-placeholder">
+      <div class="hero-candidate-silhouette">
+        <div class="photo-circle">{{ site_settings.hero_placeholder_initials }}</div>
+        <p class="hero-photo-name">{{ site_settings.hero_placeholder_name }}</p>
+        <p class="hero-photo-role">{{ site_settings.hero_placeholder_role }}</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  <div class="hero-date-banner ha-slide-up" style="animation-delay:600ms">
+    <span class="hero-date-label">{{ site_settings.hero_banner_label1 }}</span>
+    <div class="hero-date-divider"></div>
+    <span class="hero-date-value">{{ site_settings.hero_banner_date }}</span>
+    <div class="hero-date-divider"></div>
+    <span class="hero-date-label">{{ site_settings.hero_banner_label2 }}</span>
+    <div class="hero-date-divider"></div>
+    <span class="hero-date-label">{{ site_settings.hero_banner_label3 }}</span>
+  </div>
+</section>
+
+<!-- ─── CHIFFRES CLÉS ─────────────────────────────────────────── -->
+<div class="stats-band">
+  {% for stat in key_stats %}
+  <div class="stat-item reveal-up{% if forloop.counter0 < 4 %} stagger-{{ forloop.counter0|add:1 }}{% endif %}">
+    <span class="stat-icon" aria-hidden="true">
+      <i class="{{ stat.icon }}"></i>
+    </span>
+    {% if stat.numeric_value %}
+    <div class="stat-number"
+         data-target="{{ stat.numeric_value }}"
+         data-suffix="{{ stat.suffix }}"
+         data-start="{{ stat.start_value }}">{{ stat.number }}{{ stat.suffix }}</div>
+    {% else %}
+    <div class="stat-number">{{ stat.number }}{{ stat.suffix }}</div>
+    {% endif %}
+    <div class="stat-label">{{ stat.label }}</div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- ─── DOUBLE PORTRAIT ────────────────────────────────────────── -->
+<section class="portrait" id="portrait">
+  <div class="portrait-intro reveal-up">
+    <div class="section-eyebrow">
+      <i class="fas fa-id-card" aria-hidden="true"></i>
+      Qui est Adra Diallo ?
+    </div>
+    <h2 class="section-title">Un homme de <span class="accent">double stature</span></h2>
+    <p class="portrait-lead">
+      Abdourahamane Diallo, dit « Adra », incarne la rencontre rare entre l'exigence académique
+      et l'engagement de terrain. Juriste, politologue, chercheur à l'Université Toulouse Capitole
+      depuis 2015 et homme profondément ancré dans les réalités guinéennes.
+    </p>
+  </div>
+  {% if bio_dimensions %}
+  <div class="portrait-grid">
+    {% for dim in bio_dimensions %}
+    <div class="portrait-card reveal-scale stagger-{{ forloop.counter }}">
+      <div class="portrait-card-icon" aria-hidden="true">
+        <i class="{{ dim.icon }}"></i>
+      </div>
+      <h3 class="portrait-card-title">{{ dim.title }}</h3>
+      <p class="portrait-card-text">{{ dim.description }}</p>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="portrait-grid">
+    <div class="portrait-card reveal-scale stagger-1">
+      <div class="portrait-card-icon"><i class="fas fa-graduation-cap"></i></div>
+      <h3 class="portrait-card-title">L'Intellectuel Engagé</h3>
+      <p class="portrait-card-text">
+        Juriste et politologue formé à l'Université Cheikh Anta Diop de Dakar, puis chercheur
+        au CDPIAC de l'Université Toulouse Capitole depuis 2015. Expert reconnu en gouvernance,
+        conflits africains et intelligence artificielle. Plus de 15 publications académiques
+        sur les enjeux stratégiques du continent.
+      </p>
+    </div>
+    <div class="portrait-card reveal-scale stagger-2">
+      <div class="portrait-card-icon"><i class="fas fa-hands-helping"></i></div>
+      <h3 class="portrait-card-title">L'Homme de Terrain</h3>
+      <p class="portrait-card-text">
+        Médiateur communautaire, conseiller estudiantin, pilier de la diaspora guinéenne à
+        Toulouse. Adra Diallo est au cœur des réseaux de la société civile guinéenne en Europe
+        et en Afrique. Son engagement pour la jeunesse, la paix sociale et le leadership
+        citoyen est le fil rouge de toute son action.
+      </p>
+    </div>
+  </div>
+  {% endif %}
+</section>
+
+<!-- ─── PARCOURS / TIMELINE ────────────────────────────────────── -->
+<section class="parcours" id="parcours">
+  <div class="parcours-inner">
+    <div class="parcours-intro reveal-left">
+      <div class="section-eyebrow">
+        <i class="fas fa-route" aria-hidden="true"></i>
+        Itinéraire
+      </div>
+      <h2 class="section-title">De Dakar à <span class="accent">Toulouse</span>, un parcours d'excellence</h2>
+      <p class="parcours-lead">
+        Adra Diallo a construit sa formation intellectuelle entre l'Afrique et l'Europe,
+        portant toujours avec lui la question fondamentale : comment la connaissance
+        peut-elle servir la Guinée ?
+      </p>
+      <div class="about-quote">
+        <p>« La science sans engagement est stérile. L'engagement sans rigueur est dangereux. Je veux apporter les deux à la Guinée. »</p>
+      </div>
+      <p class="parcours-lead">
+        Dix ans de recherche sur les conflits, la gouvernance et les dynamiques
+        institutionnelles africaines — une expertise que la Guinée mérite d'avoir
+        représentée à l'Assemblée nationale.
+      </p>
+    </div>
+    <div class="reveal-right">
+      <div class="section-eyebrow">
+        <i class="fas fa-history" aria-hidden="true"></i>
+        Chronologie
+      </div>
+      <h3 style="font-size:20px;font-weight:700;color:var(--text-dark);margin-bottom:32px;letter-spacing:-0.3px;font-family:'Libre Baskerville',serif;">
+        Les étapes d'un parcours
+      </h3>
+      <div class="timeline">
+        {% for step in timeline_steps %}
+        <div class="timeline-item">
+          <div class="timeline-icon" aria-hidden="true">
+            <i class="{{ step.icon }}"></i>
+          </div>
+          <div class="timeline-content-wrapper">
+            <div class="timeline-year">{{ step.year }}</div>
+            <div class="timeline-content">{{ step.title }}</div>
+            {% if step.description %}<div class="timeline-detail">{{ step.description }}</div>{% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROGRAMME ──────────────────────────────────────────────── -->
+<section class="programme" id="programme">
+  <div class="programme-intro reveal-up">
+    <div class="section-eyebrow">
+      <i class="fas fa-clipboard-list" aria-hidden="true"></i>
+      Programme législatif
+    </div>
+    <h2 class="section-title">Cinq axes pour <span class="accent">la Guinée</span></h2>
+    <p class="programme-lead">
+      Cinq axes programmatiques fondés sur l'expertise académique et l'observation du terrain.
+      Un programme qui articule réforme institutionnelle, cohésion sociale et développement humain.
+    </p>
+  </div>
+  <div class="axes-grid">
+    {% for axis in program_axes %}
+    <div class="axe-card{% if axis.is_featured %} featured{% endif %} reveal-up{% if forloop.counter <= 4 %} stagger-{{ forloop.counter }}{% endif %}">
+      <div class="axe-number">0{{ forloop.counter }}</div>
+      <div class="axe-icon" aria-hidden="true">
+        <i class="{{ axis.icon }}"></i>
+      </div>
+      <h3 class="axe-title">{{ axis.title }}</h3>
+      <p class="axe-desc">{{ axis.description }}</p>
+      {% if axis.points %}
+      <ul class="axe-points">
+        {% for point in axis.points_list %}
+        <li>
+          <i class="fas fa-chevron-right" aria-hidden="true"></i>
+          {{ point }}
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- ─── PUBLICATIONS ACADÉMIQUES ───────────────────────────────── -->
+<section class="publications" id="publications">
+  <div class="pub-header reveal-up">
+    <div class="section-eyebrow">
+      <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+      Travaux académiques
+    </div>
+    <h2 class="section-title">Publications & <span class="accent">Recherches</span></h2>
+    <p class="pub-intro-sub">Une production scientifique sur les enjeux fondamentaux de la Guinée et de l'Afrique de l'Ouest.</p>
+  </div>
+
+  <div class="pub-filter-bar reveal-up">
+    <button class="pub-filter-btn active" data-filter="all">
+      <i class="fas fa-border-all" aria-hidden="true"></i> Tous
+    </button>
+    <button class="pub-filter-btn" data-filter="academic">
+      <i class="fas fa-book" aria-hidden="true"></i> Articles académiques
+    </button>
+    <button class="pub-filter-btn" data-filter="report">
+      <i class="fas fa-file-alt" aria-hidden="true"></i> Rapports
+    </button>
+    <button class="pub-filter-btn" data-filter="opinion">
+      <i class="fas fa-pen-nib" aria-hidden="true"></i> Tribunes
+    </button>
+    <button class="pub-filter-btn" data-filter="comparative">
+      <i class="fas fa-balance-scale" aria-hidden="true"></i> Études comparatives
+    </button>
+  </div>
+
+  {% if publications %}
+  <div class="pub-grid" id="pubGrid">
+    {% for pub in publications %}
+    <article class="pub-card reveal-scale"
+             data-category="{{ pub.category }}"
+             style="transition-delay:{% widthratio forloop.counter0 1 60 %}ms">
+      {% if pub.cover_image %}
+      <img src="{{ pub.cover_image.url }}" alt="{{ pub.title }}" class="pub-card-img" loading="lazy" decoding="async">
+      {% endif %}
+      <div class="pub-card-body">
+        <span class="pub-badge pub-badge--{{ pub.category }}">
+          {% if pub.category == "academic" %}<i class="fas fa-book" aria-hidden="true"></i>
+          {% elif pub.category == "report" %}<i class="fas fa-file-alt" aria-hidden="true"></i>
+          {% elif pub.category == "opinion" %}<i class="fas fa-pen-nib" aria-hidden="true"></i>
+          {% else %}<i class="fas fa-balance-scale" aria-hidden="true"></i>
+          {% endif %}
+          {{ pub.get_category_display }}
+        </span>
+        <div class="pub-year-tag">{{ pub.year }}{% if pub.institution %} · {{ pub.institution }}{% endif %}</div>
+        <h3 class="pub-card-title">{{ pub.title }}</h3>
+        <p class="pub-card-summary">{{ pub.summary }}</p>
+        <button class="pub-read-btn"
+                data-title="{{ pub.title }}"
+                data-category="{{ pub.category }}"
+                data-category-label="{{ pub.get_category_display }}"
+                data-year="{{ pub.year }}"
+                data-institution="{{ pub.institution }}"
+                data-summary="{{ pub.summary }}"
+                data-cover="{{ pub.cover_url }}"
+                {% if pub.pdf_url %}data-pdf="{{ pub.pdf_url }}"{% endif %}>
+          <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          {% if pub.pdf_url %}Lire le PDF{% else %}En savoir plus{% endif %}
+        </button>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  <p class="pub-no-result" id="pubNoResult" style="display:none;">
+    Aucune publication dans cette catégorie.
+  </p>
+  {% else %}
+  <p class="pub-empty">Les publications seront ajoutées prochainement.</p>
+  {% endif %}
+</section>
+
+<!-- ─── MODALE PUBLICATION ─────────────────────────────────────── -->
+<div class="pub-modal-overlay" id="pubModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="pub-modal-box">
+    <div class="pub-modal-header">
+      <span id="modalBadge" class="pub-badge"></span>
+      <button class="pub-modal-close" id="pubModalClose" aria-label="Fermer">
+        <i class="fas fa-xmark" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="pub-modal-body">
+      <img id="modalCover" class="pub-modal-cover" src="" alt="" style="display:none;">
+      <h2 class="pub-modal-title" id="modalTitle"></h2>
+      <div class="pub-modal-meta" id="modalMeta"></div>
+      <div class="pub-modal-content" id="modalContent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── ANALYSE COMPARATIVE DOUMBOUYA ─────────────────────────── -->
+{% if analysis %}
+<section class="comparative" id="analyse">
+  <div class="reveal-up">
+    <div class="section-eyebrow">
+      <i class="fas fa-balance-scale" aria-hidden="true"></i>
+      Analyse politique
+    </div>
+    <h2 class="section-title">{{ analysis.title|truncatewords:8 }}<br><span class="accent">{{ analysis.title|truncatewords_html:4 }}</span></h2>
+    {% if analysis.subtitle %}<p style="font-size:15px;color:rgba(255,255,255,0.45);margin-bottom:24px;font-family:'Work Sans',sans-serif;">{{ analysis.subtitle }}</p>{% endif %}
+    <p class="comparative-intro">{{ analysis.intro }}</p>
+  </div>
+
+  {% if analysis.points.all %}
+  <div class="comparison-header reveal-up">
+    <div class="comparison-col-header promise">
+      <i class="fas fa-comment-dots" aria-hidden="true"></i>
+      {{ analysis.promise_column_title }}
+    </div>
+    <div class="comparison-col-header reality">
+      <i class="fas fa-eye" aria-hidden="true"></i>
+      {{ analysis.reality_column_title }}
+    </div>
+  </div>
+  <div class="comparison-rows">
+    {% for point in analysis.points.all %}
+    <div class="comparison-row">
+      <div class="comparison-row-promise">
+        <div class="comparison-theme">{{ point.theme }}</div>
+        {{ point.promise_text }}
+      </div>
+      <div class="comparison-row-reality">
+        <div class="comparison-theme">{{ point.theme }}</div>
+        {{ point.reality_text }}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="comparative-conclusion reveal-up">
+    <p>{{ analysis.conclusion }}</p>
+  </div>
+</section>
+{% else %}
+<!-- Section analyse masquée si aucune analyse publiée -->
+<section class="comparative" id="analyse" style="padding:64px 8%;">
+  <div class="reveal-up">
+    <div class="section-eyebrow">
+      <i class="fas fa-balance-scale" aria-hidden="true"></i>
+      Analyse politique
+    </div>
+    <h2 class="section-title">Doumbouya : de la vision<br>à la <span class="accent">préservation personnelle</span></h2>
+    <p class="comparative-intro">
+      Étude comparative entre la promesse de la rupture par l'inexpérience et le vécu de la
+      gouvernance militaire guinéenne. Une analyse rigoureuse, fondée sur les faits, que seul
+      un chercheur spécialisé en conflits et gouvernance africaine peut produire avec objectivité.
+    </p>
+    <p style="font-size:14px;color:rgba(255,255,255,0.35);font-family:'Work Sans',sans-serif;font-style:italic;">
+      L'analyse complète sera publiée prochainement.
+    </p>
+  </div>
+</section>
+{% endif %}
+
+<!-- ─── ACTUALITÉS ─────────────────────────────────────────────── -->
+<section class="actualites" id="actualites">
+  <div class="reveal-up">
+    <div class="section-eyebrow">
+      <i class="fas fa-newspaper" aria-hidden="true"></i>
+      Campagne
+    </div>
+    <h2 class="section-title">Actualités de <span class="accent">campagne</span></h2>
+  </div>
+  {% if news_articles %}
+  <div class="news-grid">
+    {% for article in news_articles %}
+    <article class="news-card reveal-scale stagger-{{ forloop.counter }}">
+      {% if article.cover_image %}
+      <img src="{{ article.cover_image.url }}" alt="{{ article.title }}" class="news-card-img" loading="lazy" decoding="async">
+      {% endif %}
+      <div class="news-card-body">
+        <div class="news-card-date">{{ article.published_at|date:"j F Y" }}</div>
+        <h3 class="news-card-title">{{ article.title }}</h3>
+        <div class="news-card-content">{{ article.content|truncatewords:30 }}</div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="pub-empty" style="margin-top:48px;">Les premières actualités de campagne seront publiées prochainement.</p>
+  {% endif %}
+</section>
+
+<!-- ─── ENGAGEMENTS ────────────────────────────────────────────── -->
+<section class="engagements" id="engagements">
+  <div class="reveal-up">
+    <div class="section-eyebrow">
+      <i class="fas fa-file-signature" aria-hidden="true"></i>
+      Notre contrat
+    </div>
+    <h2 class="section-title">Des engagements <span class="accent">concrets</span></h2>
+  </div>
+  <div class="engagements-grid">
+    {% for commitment in commitments %}
+    <div class="engagement-item {% if forloop.counter0|divisibleby:2 %}reveal-left{% else %}reveal-right{% endif %}">
+      <div class="engagement-check" aria-hidden="true">
+        <i class="{{ commitment.icon }}"></i>
+      </div>
+      <div class="engagement-text">{{ commitment.text }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- ─── CONTACT / REJOINDRE ────────────────────────────────────── -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-info reveal-left">
+      <div class="section-eyebrow">
+        <i class="fas fa-handshake" aria-hidden="true"></i>
+        Rejoindre le mouvement
+      </div>
+      <h2 class="section-title">Agir pour <span class="accent">la Guinée</span></h2>
+      <p class="contact-desc">
+        Le 24 mai 2026, chaque voix compte. Que vous souhaitiez soutenir la campagne,
+        rejoindre notre équipe de bénévoles ou simplement en savoir plus, prenez contact avec nous.
+      </p>
+      <div class="contact-detail">
+        <i class="fas fa-envelope contact-icon" aria-hidden="true"></i>
+        <span class="contact-val">adra.diallo@frondeg.co</span>
+      </div>
+      <div class="contact-detail">
+        <i class="fas fa-map-marker-alt contact-icon" aria-hidden="true"></i>
+        <span class="contact-val">Toulouse, France · Conakry, Guinée</span>
+      </div>
+      <div class="contact-detail">
+        <i class="fas fa-university contact-icon" aria-hidden="true"></i>
+        <span class="contact-val">CDPIAC — Université Toulouse Capitole</span>
+      </div>
+    </div>
+    <div class="contact-form-wrap reveal-right">
+      <form class="contact-form" action="#" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="contact-name">Nom complet</label>
+          <input type="text" id="contact-name" name="name" class="form-input" placeholder="Votre nom" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="contact-email">Adresse e-mail</label>
+          <input type="email" id="contact-email" name="email" class="form-input" placeholder="votre@email.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="contact-phone">Téléphone (optionnel)</label>
+          <input type="tel" id="contact-phone" name="phone" class="form-input" placeholder="+224 6XX XX XX XX" autocomplete="tel">
+        </div>
+        <div class="form-group">
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" class="form-textarea" placeholder="Comment souhaitez-vous vous engager ?"></textarea>
+        </div>
+        <button type="submit" class="form-submit">
+          <i class="fas fa-paper-plane" aria-hidden="true"></i>
+          Envoyer le message
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">FRONDEG</div>
+      <div class="footer-logo-sub">Front Démocratique de Guinée · Liste Nationale</div>
+      <p class="footer-desc">
+        Sous la direction nationale d'Abdoulaye Yéro Baldé, Président du FRONDEG.
+        Candidature d'Abdourahamane « Adra » Diallo sur la liste nationale
+        aux élections législatives guinéennes du 24 mai 2026.
+      </p>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigation</div>
+      <ul class="footer-links">
+        <li><a href="#accueil">Accueil</a></li>
+        <li><a href="#portrait">Portrait</a></li>
+        <li><a href="#parcours">Parcours</a></li>
+        <li><a href="#programme">Programme</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#analyse">Analyse</a></li>
+        <li><a href="#contact">Rejoindre</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <div class="footer-contact-item">
+        <i class="fas fa-envelope footer-contact-icon" aria-hidden="true"></i>
+        <span class="footer-contact-value">adra.diallo@frondeg.co</span>
+      </div>
+      <div class="footer-contact-item">
+        <i class="fas fa-map-marker-alt footer-contact-icon" aria-hidden="true"></i>
+        <span class="footer-contact-value">Toulouse, France</span>
+      </div>
+      <div class="footer-contact-item">
+        <i class="fas fa-university footer-contact-icon" aria-hidden="true"></i>
+        <span class="footer-contact-value">CDPIAC · Université Toulouse Capitole</span>
+      </div>
+      <div style="margin-top:20px;">
+        <div class="footer-col-title">
+          <i class="fas fa-flag" aria-hidden="true" style="margin-right:6px;"></i>
+          Circonscription
+        </div>
+        <p style="font-size:13px;color:rgba(255,255,255,0.4);font-family:'Work Sans',sans-serif;">Liste Nationale — République de Guinée<br>Élections législatives · 24 mai 2026</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 FRONDEG — Front Démocratique de Guinée · Tous droits réservés</p>
+    <div class="footer-election-tag">Vote le 24 mai 2026</div>
+  </div>
+</footer>
+
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

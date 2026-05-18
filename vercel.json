@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "adra_diallo/wsgi.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.12"
+      }
+    },
+    {
+      "src": "build_files.sh",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "staticfiles_build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "^/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "^/favicon\\.ico$",
+      "dest": "/static/img/favicon.ico"
+    },
+    {
+      "src": "^/apple-touch-icon\\.png$",
+      "dest": "/static/img/apple-touch-icon.png"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "adra_diallo/wsgi.py"
+    }
+  ]
+}
